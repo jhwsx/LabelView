@@ -3,7 +3,6 @@ package com.wzc.labelview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -25,19 +24,21 @@ public class LabelView extends View {
     float mTextTopPadding;
     float mTextLeftPadding;
     float mTextRightPadding;
-    Paint mTrapezoidPaint;
+    Paint mLabelPaint;
     int mBackGroundColor;
     float mDegrees;
     String mText;
     int width;
     int height;
-
-    public static final int DEGREES_LEFT = -45;
+    private Path mPath = new Path();
+    private RectF mRect = new RectF();
+    private Paint.FontMetrics mFontMetrics;
+    private static final String EMPTY_TEXT = " ";
     public static final int DEGREES_RIGHT = 45;
-    private Path mPath;
-    private Paint.FontMetricsInt mFontMetricsInt;
-
-
+    public static final int DEGREES_LEFT = -45;
+    public static final int TEXT_STYLE_NORMAL = 0;
+    public static final int TEXT_STYLE_ITALIC = 1;
+    public static final int TEXT_STYLE_BOLD = 2;
     public LabelView(Context context) {
         this(context, null);
     }
@@ -65,29 +66,9 @@ public class LabelView extends View {
         ta.recycle();
 
         initTextPaint();
-        initTrapezoidPaint();
-        mPath = new Path();
+        initLabelPaint();
         resetTextStatus();
-
     }
-
-
-    public void setText(String text) {
-        mText = text;
-        resetTextStatus();
-        invalidate();
-    }
-
-
-    public void setBackGroundColor(int color) {
-        mTrapezoidPaint.setColor(color);
-        invalidate();
-    }
-
-    private static final int TEXT_STYLE_NORMAL = 0;
-    private static final int TEXT_STYLE_ITALIC = 1;
-    private static final int TEXT_STYLE_BOLD = 2;
-    private RectF mRect = new RectF();
 
     private void initTextPaint() {
 
@@ -102,24 +83,23 @@ public class LabelView extends View {
         }
     }
 
-    private void initTrapezoidPaint() {
+    private void initLabelPaint() {
 
-        mTrapezoidPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTrapezoidPaint.setColor(mBackGroundColor);
+        mLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mLabelPaint.setColor(mBackGroundColor);
     }
 
     private void resetTextStatus() {
 
         Rect rectText = new Rect();
         if (TextUtils.isEmpty(mText)) {
-            throw new IllegalArgumentException("mText cannot be empty");
+            mText = EMPTY_TEXT;
         }
         mTextPaint.getTextBounds(mText, 0, mText.length(), rectText);
         mTextWidth = rectText.width();
         mTextHeight = rectText.height();
-        mFontMetricsInt = mTextPaint.getFontMetricsInt();
-        mTextHeight = mFontMetricsInt.bottom - mFontMetricsInt.top + mTextBottomPadding + mTextTopPadding;
-
+        mFontMetrics = mTextPaint.getFontMetrics();
+        mTextHeight = mFontMetrics.bottom - mFontMetrics.top + mTextBottomPadding + mTextTopPadding;
 
     }
 
@@ -156,22 +136,69 @@ public class LabelView extends View {
         mPath.lineTo(mRect.right, mRect.top);
         mPath.lineTo(width, height);
         mPath.close();
-        canvas.drawPath(mPath, mTrapezoidPaint);
+        canvas.drawPath(mPath, mLabelPaint);
 
-        float baseline = mRect.centerY() - (mFontMetricsInt.top + mFontMetricsInt.bottom) / 2;
+        float baseline = mRect.centerY() - (mFontMetrics.top + mFontMetrics.bottom) / 2;
         canvas.drawText(mText, mRect.centerX(), baseline, mTextPaint);
 
-
     }
 
-
-    public int dp2px(float dpValue) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    public void setText(String text) {
+        mText = text;
+        resetTextStatus();
+        invalidate();
     }
 
-    public float sp2px(float spValue) {
-        final float scale = getContext().getResources().getDisplayMetrics().scaledDensity;
-        return spValue * scale;
+    public void setLabelBackgroundColor(int color) {
+        mLabelPaint.setColor(color);
+        invalidate();
     }
+
+    public void setTextColor(int textColor) {
+        mTextColor = textColor;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextSize(float textSize) {
+        mTextSize = textSize;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextStyle(int textStyle) {
+        mTextStyle = textStyle;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextBottomPadding(float textBottomPadding) {
+        mTextBottomPadding = textBottomPadding;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextTopPadding(float textTopPadding) {
+        mTextTopPadding = textTopPadding;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextLeftPadding(float textLeftPadding) {
+        mTextLeftPadding = textLeftPadding;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setTextRightPadding(float textRightPadding) {
+        mTextRightPadding = textRightPadding;
+        resetTextStatus();
+        invalidate();
+    }
+
+    public void setDegrees(float degrees) {
+        mDegrees = degrees;
+        invalidate();
+    }
+
 }

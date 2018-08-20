@@ -35,19 +35,10 @@
         app:label_text_top_padding="4dp"/>
 
     <view
+        android:id="@+id/right_top_label"
         class="com.wzc.labelview.LabelView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:label_background_color="@android:color/darker_gray"
-        app:label_direction="rightTop"
-        app:label_text="广告标签"
-        app:label_text_bottom_padding="4dp"
-        app:label_text_color="@android:color/white"
-        app:label_text_left_padding="4dp"
-        app:label_text_right_padding="4dp"
-        app:label_text_size="14dp"
-        app:label_text_style="bold"
-        app:label_text_top_padding="4dp"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>
