@@ -47,23 +47,23 @@ public class LabelView extends View {
         super(context, attrs, defStyleAttr);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LabelView);
-        // 顶部的外边距
+
         mTopMargin = ta.getDimension(R.styleable.LabelView_label_top_margin, dp2px(7));
-        // 顶部的内边距
+
         mTopPadding = ta.getDimension(R.styleable.LabelView_label_top_padding, dp2px(3));
-        // 底部的内边距
+
         mBottomPadding = ta.getDimension(R.styleable.LabelView_label_bottom_padding, dp2px(3));
-        // 背景色
+
         mBackGroundColor = ta.getColor(R.styleable.LabelView_label_background_color, Color.parseColor("#66000000"));
-        // 文本颜色
+
         mTextColor = ta.getColor(R.styleable.LabelView_label_text_color, Color.WHITE);
-        // 文本字体大小
+
         mTextSize = ta.getDimension(R.styleable.LabelView_label_text_size, sp2px(11));
-        // 文本内容
+
         mText = ta.getString(R.styleable.LabelView_label_text);
-        // 文本样式
+
         mTextStyle = ta.getInt(R.styleable.LabelView_label_text_style, TEXT_STYLE_BOLD);
-        // 旋转角度
+
         mDegrees = ta.getInt(R.styleable.LabelView_label_direction, 45);
 
         ta.recycle();
@@ -92,7 +92,7 @@ public class LabelView extends View {
     private static final int TEXT_STYLE_ITALIC = 1;
     private static final int TEXT_STYLE_BOLD = 2;
     private void initTextPaint() {
-        //初始化绘制数字文本的画笔
+
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -105,13 +105,13 @@ public class LabelView extends View {
     }
 
     private void initTrapezoidPaint() {
-        //初始化绘制梯形背景的画笔
+
         mTrapezoidPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTrapezoidPaint.setColor(mBackGroundColor);
     }
 
     private void resetTextStatus() {
-        // 测量文本高度
+
         Rect rectText = new Rect();
         if (TextUtils.isEmpty(mText)) {
             throw new IllegalArgumentException("mText cannot be empty");
@@ -127,7 +127,7 @@ public class LabelView extends View {
         height = (int) (mTopMargin + mTopPadding + mBottomPadding + mTextHeight);
         width = 2 * height;
 
-        //控件的真正高度，勾股定理...
+
         int realHeight = (int) (height * Math.sqrt(2));
         setMeasuredDimension(width, realHeight);
     }
@@ -136,23 +136,23 @@ public class LabelView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // 1, 位移和旋转canvas
+
         canvas.translate(0, (float) ((height * Math.sqrt(2)) - height));
         if (mDegrees == DEGREES_LEFT) {
-            canvas.rotate(mDegrees, 0, height); // 逆时针旋转, 以(0,height)为旋转点
+            canvas.rotate(mDegrees, 0, height);
         } else if (mDegrees == DEGREES_RIGHT) {
-            canvas.rotate(mDegrees, width, height); // 顺时针旋转, 以(width,height)为旋转点
+            canvas.rotate(mDegrees, width, height);
         }
 
-        // 2, 绘制梯形背景
+
         mPath.moveTo(0, height);
         mPath.lineTo(width / 2 - mTopMargin, mTopMargin);
         mPath.lineTo(width / 2 + mTopMargin, mTopMargin);
         mPath.lineTo(width, height);
         mPath.close();
-        // 填充路径
+
         canvas.drawPath(mPath, mTrapezoidPaint);
-        // 绘制文本
+
         canvas.drawText(mText, width / 2, mTopMargin + mTextHeight + mTopPadding, mTextPaint);
     }
 
