@@ -7,10 +7,10 @@
         <attr name="label_text" format="string"/>
         <attr name="label_text_size" format="dimension"/>
 
-        <attr name="label_top_margin" format="dimension"/>
-        <attr name="label_top_padding" format="dimension"/>
-        <attr name="label_bottom_padding" format="dimension"/>
-
+        <attr name="label_text_top_padding" format="dimension"/>
+        <attr name="label_text_bottom_padding" format="dimension"/>
+        <attr name="label_text_left_padding" format="dimension"/>
+        <attr name="label_text_right_padding" format="dimension"/>
 
         <attr name="label_text_style">
             <enum name="normal" value="0"/>

@@ -8,18 +8,46 @@
     tools:context="com.wzc.labelview.example.MainActivity">
 
     <TextView
-        android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
+        android:background="#4400ff00"
+        android:gravity="center"
         android:text="这是一个广告"
-        android:background="#4400ff00"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <view
         class="com.wzc.labelview.LabelView"
         android:layout_width="wrap_content"
-        app:label_text="string/ad"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:label_background_color="@android:color/darker_gray"
         app:label_direction="leftTop"
-        android:layout_height="wrap_content"/>
+        app:label_text="广告标签"
+        app:label_text_bottom_padding="4dp"
+        app:label_text_color="@android:color/white"
+        app:label_text_left_padding="4dp"
+        app:label_text_right_padding="4dp"
+        app:label_text_size="14dp"
+        app:label_text_style="bold"
+        app:label_text_top_padding="4dp"/>
+
+    <view
+        class="com.wzc.labelview.LabelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:label_background_color="@android:color/darker_gray"
+        app:label_direction="rightTop"
+        app:label_text="广告标签"
+        app:label_text_bottom_padding="4dp"
+        app:label_text_color="@android:color/white"
+        app:label_text_left_padding="4dp"
+        app:label_text_right_padding="4dp"
+        app:label_text_size="14dp"
+        app:label_text_style="bold"
+        app:label_text_top_padding="4dp"/>
 </android.support.constraint.ConstraintLayout>
