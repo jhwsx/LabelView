@@ -14,8 +14,7 @@
 
         <attr name="label_text_style">
             <enum name="normal" value="0"/>
-            <enum name="italic" value="1"/>
-            <enum name="bold" value="2"/>
+            <enum name="bold" value="1"/>
         </attr>
 
         <attr name="label_direction">

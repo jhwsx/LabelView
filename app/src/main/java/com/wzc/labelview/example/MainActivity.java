@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         labelView.setDegrees(LabelView.DEGREES_RIGHT);
         labelView.setLabelBackgroundColor(getResources().getColor(android.R.color.holo_purple));
         labelView.setTextColor(getResources().getColor(android.R.color.white));
-        labelView.setTextStyle(LabelView.TEXT_STYLE_ITALIC);
+        labelView.setTextStyle(LabelView.TEXT_STYLE_NORMAL);
         labelView.setTextSize(getResources().getDimension(R.dimen.text_size));
         labelView.setTextLeftPadding(getResources().getDimension(R.dimen.padding));
         labelView.setTextTopPadding(getResources().getDimension(R.dimen.padding));

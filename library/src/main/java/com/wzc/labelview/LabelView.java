@@ -14,7 +14,6 @@ import android.view.View;
 
 public class LabelView extends View {
 
-    Paint mTextPaint;
     int mTextColor;
     float mTextSize;
     float mTextHeight;
@@ -24,7 +23,8 @@ public class LabelView extends View {
     float mTextTopPadding;
     float mTextLeftPadding;
     float mTextRightPadding;
-    Paint mLabelPaint;
+    Paint mLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     int mBackGroundColor;
     float mDegrees;
     String mText;
@@ -32,13 +32,14 @@ public class LabelView extends View {
     int height;
     private Path mPath = new Path();
     private RectF mRect = new RectF();
+    Rect rectText = new Rect();
     private Paint.FontMetrics mFontMetrics;
     private static final String EMPTY_TEXT = " ";
     public static final int DEGREES_RIGHT = 45;
     public static final int DEGREES_LEFT = -45;
     public static final int TEXT_STYLE_NORMAL = 0;
-    public static final int TEXT_STYLE_ITALIC = 1;
-    public static final int TEXT_STYLE_BOLD = 2;
+    public static final int TEXT_STYLE_BOLD = 1;
+
     public LabelView(Context context) {
         this(context, null);
     }
@@ -72,26 +73,22 @@ public class LabelView extends View {
 
     private void initTextPaint() {
 
-        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(mTextSize);
-        if (mTextStyle == TEXT_STYLE_ITALIC) {
-            mTextPaint.setTypeface(Typeface.SANS_SERIF);
-        } else if (mTextStyle == TEXT_STYLE_BOLD) {
+        if (mTextStyle == TEXT_STYLE_BOLD) {
             mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            mTextPaint.setTypeface(Typeface.DEFAULT);
         }
     }
 
     private void initLabelPaint() {
-
-        mLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mLabelPaint.setColor(mBackGroundColor);
     }
 
     private void resetTextStatus() {
 
-        Rect rectText = new Rect();
         if (TextUtils.isEmpty(mText)) {
             mText = EMPTY_TEXT;
         }
@@ -149,26 +146,32 @@ public class LabelView extends View {
         invalidate();
     }
 
+    public void setText(int resId) {
+        mText = getResources().getString(resId);
+        setText(mText);
+    }
+
     public void setLabelBackgroundColor(int color) {
-        mLabelPaint.setColor(color);
+        mBackGroundColor = color;
+        initLabelPaint();
         invalidate();
     }
 
     public void setTextColor(int textColor) {
         mTextColor = textColor;
-        resetTextStatus();
+        initTextPaint();
         invalidate();
     }
 
     public void setTextSize(float textSize) {
         mTextSize = textSize;
-        resetTextStatus();
+        initTextPaint();
         invalidate();
     }
 
     public void setTextStyle(int textStyle) {
         mTextStyle = textStyle;
-        resetTextStatus();
+        initTextPaint();
         invalidate();
     }
 
